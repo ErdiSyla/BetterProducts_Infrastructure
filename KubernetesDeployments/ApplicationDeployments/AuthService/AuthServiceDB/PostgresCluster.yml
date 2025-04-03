@@ -1,0 +1,20 @@
+apiVersion: postgres-operator.crunchydata.com/v1
+kind: PostgresCluster
+metadata:
+  name: auth-postgresql
+spec:
+  postgresVersion: "14"
+  instances:
+    - name: instance1
+      replicas: 3
+      dataVolume:
+        size: 10Gi
+        storageClassName: "local-path"
+  users:
+    - name: {{ .Values.postgres.username }}
+      passwordSecret:
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+  databases:
+    - name: AuthService
+      owner: {{ .Values.postgres.username }}
