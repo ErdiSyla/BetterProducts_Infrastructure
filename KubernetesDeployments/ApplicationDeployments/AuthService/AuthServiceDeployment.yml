@@ -4,8 +4,8 @@ metadata:
   name: authService
   labels:
     app: authService
-app:
-  replicas: 1
+spec:
+  replicas: 3
   selector:
     matchLabels:
       app: authService
@@ -25,6 +25,10 @@ app:
               value: "8080"
             - name: AS_METRICS_PORT
               value: "8091"
+            - name: KAFKA_CONSUMER_GROUP_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}"
             - name: DB_HOST
