@@ -51,7 +51,7 @@ data:
         kubernetes_sd_configs:
           - role: pod
             namespaces:
-              names: [appns]
+              names: [microservices]
         relabel_configs:
           - source_labels: [__meta_kubernetes_pod_label_app]
             regex: authentication
