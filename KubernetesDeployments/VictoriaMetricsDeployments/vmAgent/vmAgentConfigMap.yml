@@ -46,3 +46,18 @@ data:
           - source_labels: [__meta_kubernetes_pod_ip]
             target_label: __address__
             replacement: '$1:9404'
+    
+      - job_name: 'authentication'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names: [appns]
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            regex: authentication
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_ip]
+            target_label: __address__
+            replacement: '$1:8091'
+          - target_label: __metrics_path__
+            replacement: /actuator/prometheus
