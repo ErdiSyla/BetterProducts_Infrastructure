@@ -16,5 +16,5 @@ spec:
         name: postgres-secret
         key: POSTGRES_PASSWORD
   databases:
-    - name: AuthService
+    - name: Authentication
       owner: {{ .Values.postgres.username }}
