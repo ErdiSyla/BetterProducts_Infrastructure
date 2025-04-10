@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: key-cronjob
+spec:
+  schedule: "0 2 * * 0"
+  startingDeadlineSeconds: 86400
+  concurrencyPolicy: Forbid
+  timeZone: "Etc/Utc"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 3600
+      template:
+        spec:
+          containers:
+            - name: key-generator
+              image: keyImage
+          restartPolicy: OnFailure
