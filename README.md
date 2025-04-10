@@ -11,5 +11,5 @@ to all under the standard [Apache 2.0 license](./LICENSE.txt)
 There are many ways in which you can participate in developing or bettering the BetterProductivity infrastructure, like:
 
 - [Submit bugs and feature requests](https://github.com/ErdiSyla/BetterProductivity_Infrastructure/issues), and help us make decisions about new exciting 
-new features or improved old ones.<br>
+new features or improve old ones.<br>
 - [Review source code changes](https://github.com/ErdiSyla/BetterProductivity_Infrastructure/pulls), see new pull requests, comment, review and evaluate them.
