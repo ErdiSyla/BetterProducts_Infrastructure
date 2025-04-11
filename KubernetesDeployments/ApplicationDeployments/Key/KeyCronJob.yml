@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: key-cronjob
+  namespace: microservices
 spec:
   schedule: "0 2 * * 0"
   startingDeadlineSeconds: 86400
@@ -15,4 +16,19 @@ spec:
           containers:
             - name: key-generator
               image: keyImage
+              env:
+                - name: KS_PORT
+                  value: "8081"
+                - name: SPRING_DATASOURCE_URL
+                  value: "jdbc:postgresql://postgres-key-service:5432/KeyDb"
+                - name: SPRING_DATASOURCE_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-key-secret
+                      key: username
+                - name: SPRING_DATASOURCE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-key-secret
+                      key: password
           restartPolicy: OnFailure
