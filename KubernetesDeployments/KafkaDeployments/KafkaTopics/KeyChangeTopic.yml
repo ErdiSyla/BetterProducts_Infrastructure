@@ -1,0 +1,16 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: key-change
+  labels:
+    strimzi.io/cluster: kafka-cluster
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    cleanup.policy: compact
+    min.compaction.lag.ms: 0
+    min.cleanable.dirty.ratio: 0.01
+    segment.ms: 60000
+    delete.retention.ms: 10000
+    max.compaction.lag.ms: 300000
