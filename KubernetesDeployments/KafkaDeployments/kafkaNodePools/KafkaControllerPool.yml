@@ -11,7 +11,7 @@ spec:
     - controller
   storage:
     type: persistent-claim
-    size: 100Gi
+    size: 32Gi
     deleteClaim: false
   resources:
     requests:
