@@ -9,7 +9,7 @@ spec:
     - name: instance1
       replicas: 3
       dataVolume:
-        size: 1Gi
+        size: "1Gi"
         storageClassName: "local-path"
   users:
     - name: {{ .Values.postgres.username }}
