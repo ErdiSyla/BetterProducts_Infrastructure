@@ -13,7 +13,7 @@ spec:
     acls:
       - resource:
           type: topic
-          name: auth-service-keys
+          name: auth-keys
           patternType: literal
         operations:
           - Write
