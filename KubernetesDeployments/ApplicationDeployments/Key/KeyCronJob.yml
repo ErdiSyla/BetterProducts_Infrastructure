@@ -31,4 +31,16 @@ spec:
                     secretKeyRef:
                       name: postgres-key-secret
                       key: password
+                - name: KAFKA_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: KeyUserSecret
+                      key: username
+                - name: KAFKA_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: KeyUserSecret
+                      key: password
+                - name: KAFKA_PORT
+                  value: "9093"
           restartPolicy: OnFailure

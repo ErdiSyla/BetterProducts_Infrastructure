@@ -11,12 +11,12 @@ spec:
     - controller
   storage:
     type: persistent-claim
-    size: 32Gi
+    size: "32Gi"
     deleteClaim: false
   resources:
     requests:
-      memory: 2Gi
+      memory: "2Gi"
       cpu: "1"
     limits:
-      memory: 4Gi
+      memory: "4Gi"
       cpu: "2"
