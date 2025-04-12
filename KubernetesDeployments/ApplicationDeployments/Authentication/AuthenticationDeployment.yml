@@ -7,6 +7,11 @@ metadata:
     app: authentication
 spec:
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   selector:
     matchLabels:
       app: authentication
@@ -15,9 +20,14 @@ spec:
       labels:
         app: authentication
     spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
         - name: Authentication
           image: authenticationImage
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
             - containerPort: 8091
@@ -35,25 +45,50 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-{{ .Values.postgres.username }}
+                  name: auth-postgresql-pguser-authuser
                   key: host
             - name: DB_PORT
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-{{ .Values.postgres.username }}
+                  name: auth-postgresql-pguser-authuser
                   key: port
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-{{ .Values.postgres.username }}
+                  name: auth-postgresql-pguser-authuser
                   key: dbname
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-{{ .Values.postgres.username }}
+                  name: auth-postgresql-pguser-authuser
                   key: user
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-{{ .Values.postgres.username }}
+                  name: auth-postgresql-pguser-authuser
                   key: password
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: "8091"
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: "8091"
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8091
+            failureThreshold: 12
+            periodSeconds: 10
