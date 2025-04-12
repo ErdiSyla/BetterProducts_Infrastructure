@@ -67,6 +67,18 @@ spec:
                 secretKeyRef:
                   name: auth-postgresql-pguser-authuser
                   key: password
+            - name: KAFKA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: AuthUserSecret
+                  value: username
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: AuthUserSecret
+                  value: password
+            - name: KAFKA_PORT
+              value: "9093"
           resources:
             requests:
               memory: "256Mi"
