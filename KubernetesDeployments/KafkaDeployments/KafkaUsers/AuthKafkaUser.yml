@@ -1,0 +1,34 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: auth-service-user
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: kafka-cluster
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: auth-keys
+          patternType: literal
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: topic
+          name: key-change
+          patternType: literal
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: group
+          name: authentication-
+          patternType: prefix
+        operations:
+          - Read
+          - Describe
