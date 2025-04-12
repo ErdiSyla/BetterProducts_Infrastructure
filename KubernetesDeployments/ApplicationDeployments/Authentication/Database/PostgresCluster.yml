@@ -1,21 +1,24 @@
-apiVersion: postgres-operator.crunchydata.com/v1
+apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: auth-postgresql
   namespace: microservices
 spec:
-  postgresVersion: "14"
+  postgresVersion: "16"
   instances:
-    - name: instance1
+    - name: auth-postgres
       replicas: 3
-      dataVolume:
-        size: "1Gi"
-        storageClassName: "local-path"
+      dataVolumeClaimSpec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "1Gi"
   users:
-    - name: {{ .Values.postgres.username }}
+    - name: authuser
       passwordSecret:
         name: postgres-secret
         key: POSTGRES_PASSWORD
-  databases:
-    - name: Authentication
-      owner: {{ .Values.postgres.username }}
+      databases:
+        - AuthenticationDb
+      options: 'SUPERUSER'
