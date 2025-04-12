@@ -8,6 +8,8 @@ metadata:
     strimzi.io/node-pools: enabled
 spec:
   kafka:
+    authorization:
+      type: simple
     listeners:
       - name: tls-sasl
         port: 9093
