@@ -17,15 +17,24 @@ spec:
           patternType: literal
         operations:
           - Write
+          - Describe
       - resource:
           type: topic
           name: validation-keys
           patternType: literal
         operations:
           - Write
+          - Describe
       - resource:
           type: topic
           name: key-change
           patternType: literal
         operations:
           - Write
+          - Describe
+      - resource:
+          type: cluster
+          name: kafka-cluster
+          patternType: literal
+        operations:
+          - IdempotentWrite
