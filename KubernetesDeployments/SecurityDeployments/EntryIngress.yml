@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - betterproductivity.com
-    secretName: betterproductivity-tls
+    - betterproducts.com
+    secretName: betterproducts-tls
   rules:
-  - host: betterproductivity.com
+  - host: betterproducts.com
     http:
       paths:
       - path: /
