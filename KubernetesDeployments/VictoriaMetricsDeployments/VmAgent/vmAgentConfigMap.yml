@@ -47,14 +47,14 @@ data:
             target_label: __address__
             replacement: '$1:9404'
     
-      - job_name: 'authentication'
+      - job_name: 'customer'
         kubernetes_sd_configs:
           - role: pod
             namespaces:
               names: [microservices]
         relabel_configs:
           - source_labels: [__meta_kubernetes_pod_label_app]
-            regex: authentication
+            regex: customer
             action: keep
           - source_labels: [__meta_kubernetes_pod_ip]
             target_label: __address__
