@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authentication
+  name: customer
   namespace: microservices
   labels:
-    app: authentication
+    app: customer
 spec:
   replicas: 3
   strategy:
@@ -14,27 +14,27 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: authentication
+      app: customer
   template:
     metadata:
       labels:
-        app: authentication
+        app: customer
     spec:
       terminationGracePeriodSeconds: 30
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
       containers:
-        - name: Authentication
-          image: authenticationImage
+        - name: Customer
+          image: customerImage
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
             - containerPort: 8091
           env:
-            - name: AS_PORT
+            - name: CS_PORT
               value: "8080"
-            - name: AS_METRICS_PORT
+            - name: CS_METRICS_PORT
               value: "8091"
             - name: KAFKA_CONSUMER_GROUP_ID
               valueFrom:
@@ -45,38 +45,38 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-authuser
+                  name: customer-postgresql-pguser-customer
                   key: host
             - name: DB_PORT
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-authuser
+                  name: customer-postgresql-pguser-customer
                   key: port
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-authuser
+                  name: customer-postgresql-pguser-customer
                   key: dbname
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-authuser
+                  name: customer-postgresql-pguser-customer
                   key: user
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: auth-postgresql-pguser-authuser
+                  name: customer-postgresql-pguser-customer
                   key: password
             - name: KAFKA_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: AuthUserSecret
-                  value: username
+                  name: KafkaCustomerSecret
+                  key: username
             - name: KAFKA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: AuthUserSecret
-                  value: password
+                  name: KafkaCustomerSecret
+                  key: password
             - name: KAFKA_PORT
               value: "9093"
           resources:
