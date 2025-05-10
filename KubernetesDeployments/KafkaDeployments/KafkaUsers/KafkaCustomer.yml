@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: auth-service-user
+  name: kafka-customer
   namespace: kafka
   labels:
     strimzi.io/cluster: kafka-cluster
@@ -13,7 +13,7 @@ spec:
     acls:
       - resource:
           type: topic
-          name: auth-keys
+          name: customer-keys
           patternType: literal
         operations:
           - Read
@@ -27,7 +27,7 @@ spec:
           - Describe
       - resource:
           type: group
-          name: authentication-
+          name: customer-
           patternType: prefix
         operations:
           - Read

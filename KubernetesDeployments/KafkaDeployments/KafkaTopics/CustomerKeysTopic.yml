@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: auth-keys
+  name: customer-keys
   labels:
     strimzi.io/cluster: kafka-cluster
 spec:
